@@ -17,134 +17,134 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {Manu} from '../models';
-import {ManuRepository} from '../repositories';
+import {Menu} from '../models';
+import {MenuRepository} from '../repositories';
 
 export class MenuController {
   constructor(
-    @repository(ManuRepository)
-    public manuRepository : ManuRepository,
+    @repository(MenuRepository)
+    public menuRepository : MenuRepository,
   ) {}
 
   @post('/menu')
   @response(200, {
-    description: 'Manu model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Manu)}},
+    description: 'Menu model instance',
+    content: {'application/json': {schema: getModelSchemaRef(Menu)}},
   })
   async create(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Manu, {
-            title: 'NewManu',
+          schema: getModelSchemaRef(Menu, {
+            title: 'NewMenu',
             exclude: ['_id'],
           }),
         },
       },
     })
-    manu: Omit<Manu, '_id'>,
-  ): Promise<Manu> {
-    return this.manuRepository.create(manu);
+    menu: Omit<Menu, '_id'>,
+  ): Promise<Menu> {
+    return this.menuRepository.create(menu);
   }
 
   @get('/menu/count')
   @response(200, {
-    description: 'Manu model count',
+    description: 'Menu model count',
     content: {'application/json': {schema: CountSchema}},
   })
   async count(
-    @param.where(Manu) where?: Where<Manu>,
+    @param.where(Menu) where?: Where<Menu>,
   ): Promise<Count> {
-    return this.manuRepository.count(where);
+    return this.menuRepository.count(where);
   }
 
   @get('/menu')
   @response(200, {
-    description: 'Array of Manu model instances',
+    description: 'Array of Menu model instances',
     content: {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Manu, {includeRelations: true}),
+          items: getModelSchemaRef(Menu, {includeRelations: true}),
         },
       },
     },
   })
   async find(
-    @param.filter(Manu) filter?: Filter<Manu>,
-  ): Promise<Manu[]> {
-    return this.manuRepository.find(filter);
+    @param.filter(Menu) filter?: Filter<Menu>,
+  ): Promise<Menu[]> {
+    return this.menuRepository.find(filter);
   }
 
   @patch('/menu')
   @response(200, {
-    description: 'Manu PATCH success count',
+    description: 'Menu PATCH success count',
     content: {'application/json': {schema: CountSchema}},
   })
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Manu, {partial: true}),
+          schema: getModelSchemaRef(Menu, {partial: true}),
         },
       },
     })
-    manu: Manu,
-    @param.where(Manu) where?: Where<Manu>,
+    menu: Menu,
+    @param.where(Menu) where?: Where<Menu>,
   ): Promise<Count> {
-    return this.manuRepository.updateAll(manu, where);
+    return this.menuRepository.updateAll(menu, where);
   }
 
   @get('/menu/{id}')
   @response(200, {
-    description: 'Manu model instance',
+    description: 'Menu model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Manu, {includeRelations: true}),
+        schema: getModelSchemaRef(Menu, {includeRelations: true}),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Manu, {exclude: 'where'}) filter?: FilterExcludingWhere<Manu>
-  ): Promise<Manu> {
-    return this.manuRepository.findById(id, filter);
+    @param.filter(Menu, {exclude: 'where'}) filter?: FilterExcludingWhere<Menu>
+  ): Promise<Menu> {
+    return this.menuRepository.findById(id, filter);
   }
 
   @patch('/menu/{id}')
   @response(204, {
-    description: 'Manu PATCH success',
+    description: 'Menu PATCH success',
   })
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Manu, {partial: true}),
+          schema: getModelSchemaRef(Menu, {partial: true}),
         },
       },
     })
-    manu: Manu,
+    menu: Menu,
   ): Promise<void> {
-    await this.manuRepository.updateById(id, manu);
+    await this.menuRepository.updateById(id, menu);
   }
 
   @put('/menu/{id}')
   @response(204, {
-    description: 'Manu PUT success',
+    description: 'Menu PUT success',
   })
   async replaceById(
     @param.path.string('id') id: string,
-    @requestBody() manu: Manu,
+    @requestBody() menu: Menu,
   ): Promise<void> {
-    await this.manuRepository.replaceById(id, manu);
+    await this.menuRepository.replaceById(id, menu);
   }
 
   @del('/menu/{id}')
   @response(204, {
-    description: 'Manu DELETE success',
+    description: 'Menu DELETE success',
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.manuRepository.deleteById(id);
+    await this.menuRepository.deleteById(id);
   }
 }

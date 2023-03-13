@@ -16,21 +16,21 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-Manu,
+Menu,
 RolMenu,
 Rol,
 } from '../models';
-import {ManuRepository} from '../repositories';
+import {MenuRepository} from '../repositories';
 
-export class ManuRolController {
+export class MenuRolController {
   constructor(
-    @repository(ManuRepository) protected manuRepository: ManuRepository,
+    @repository(MenuRepository) protected menuRepository: MenuRepository,
   ) { }
 
-  @get('/manus/{id}/rols', {
+  @get('/menus/{id}/rols', {
     responses: {
       '200': {
-        description: 'Array of Manu has many Rol through RolMenu',
+        description: 'Array of Menu has many Rol through RolMenu',
         content: {
           'application/json': {
             schema: {type: 'array', items: getModelSchemaRef(Rol)},
@@ -43,10 +43,10 @@ export class ManuRolController {
     @param.path.string('id') id: string,
     @param.query.object('filter') filter?: Filter<Rol>,
   ): Promise<Rol[]> {
-    return this.manuRepository.roles(id).find(filter);
+    return this.menuRepository.roles(id).find(filter);
   }
 
-  @post('/manus/{id}/rols', {
+  @post('/menus/{id}/rols', {
     responses: {
       '200': {
         description: 'create a Rol model instance',
@@ -55,25 +55,25 @@ export class ManuRolController {
     },
   })
   async create(
-    @param.path.string('id') id: typeof Manu.prototype._id,
+    @param.path.string('id') id: typeof Menu.prototype._id,
     @requestBody({
       content: {
         'application/json': {
           schema: getModelSchemaRef(Rol, {
-            title: 'NewRolInManu',
+            title: 'NewRolInMenu',
             exclude: ['_id'],
           }),
         },
       },
     }) rol: Omit<Rol, '_id'>,
   ): Promise<Rol> {
-    return this.manuRepository.roles(id).create(rol);
+    return this.menuRepository.roles(id).create(rol);
   }
 
-  @patch('/manus/{id}/rols', {
+  @patch('/menus/{id}/rols', {
     responses: {
       '200': {
-        description: 'Manu.Rol PATCH success count',
+        description: 'Menu.Rol PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
@@ -90,13 +90,13 @@ export class ManuRolController {
     rol: Partial<Rol>,
     @param.query.object('where', getWhereSchemaFor(Rol)) where?: Where<Rol>,
   ): Promise<Count> {
-    return this.manuRepository.roles(id).patch(rol, where);
+    return this.menuRepository.roles(id).patch(rol, where);
   }
 
-  @del('/manus/{id}/rols', {
+  @del('/menus/{id}/rols', {
     responses: {
       '200': {
-        description: 'Manu.Rol DELETE success count',
+        description: 'Menu.Rol DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
@@ -105,6 +105,6 @@ export class ManuRolController {
     @param.path.string('id') id: string,
     @param.query.object('where', getWhereSchemaFor(Rol)) where?: Where<Rol>,
   ): Promise<Count> {
-    return this.manuRepository.roles(id).delete(where);
+    return this.menuRepository.roles(id).delete(where);
   }
 }

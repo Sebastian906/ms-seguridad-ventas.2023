@@ -18,22 +18,22 @@ import {
 import {
 Rol,
 RolMenu,
-Manu,
+Menu,
 } from '../models';
 import {RolRepository} from '../repositories';
 
-export class RolManuController {
+export class RolMenuController {
   constructor(
     @repository(RolRepository) protected rolRepository: RolRepository,
   ) { }
 
-  @get('/rols/{id}/manus', {
+  @get('/rols/{id}/menus', {
     responses: {
       '200': {
-        description: 'Array of Rol has many Manu through RolMenu',
+        description: 'Array of Rol has many Menu through RolMenu',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(Manu)},
+            schema: {type: 'array', items: getModelSchemaRef(Menu)},
           },
         },
       },
@@ -41,16 +41,16 @@ export class RolManuController {
   })
   async find(
     @param.path.string('id') id: string,
-    @param.query.object('filter') filter?: Filter<Manu>,
-  ): Promise<Manu[]> {
+    @param.query.object('filter') filter?: Filter<Menu>,
+  ): Promise<Menu[]> {
     return this.rolRepository.menus(id).find(filter);
   }
 
-  @post('/rols/{id}/manus', {
+  @post('/rols/{id}/menus', {
     responses: {
       '200': {
-        description: 'create a Manu model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Manu)}},
+        description: 'create a Menu model instance',
+        content: {'application/json': {schema: getModelSchemaRef(Menu)}},
       },
     },
   })
@@ -59,21 +59,21 @@ export class RolManuController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Manu, {
-            title: 'NewManuInRol',
+          schema: getModelSchemaRef(Menu, {
+            title: 'NewMenuInRol',
             exclude: ['_id'],
           }),
         },
       },
-    }) manu: Omit<Manu, '_id'>,
-  ): Promise<Manu> {
-    return this.rolRepository.menus(id).create(manu);
+    }) menu: Omit<Menu, '_id'>,
+  ): Promise<Menu> {
+    return this.rolRepository.menus(id).create(menu);
   }
 
-  @patch('/rols/{id}/manus', {
+  @patch('/rols/{id}/menus', {
     responses: {
       '200': {
-        description: 'Rol.Manu PATCH success count',
+        description: 'Rol.Menu PATCH success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
@@ -83,27 +83,27 @@ export class RolManuController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Manu, {partial: true}),
+          schema: getModelSchemaRef(Menu, {partial: true}),
         },
       },
     })
-    manu: Partial<Manu>,
-    @param.query.object('where', getWhereSchemaFor(Manu)) where?: Where<Manu>,
+    menu: Partial<Menu>,
+    @param.query.object('where', getWhereSchemaFor(Menu)) where?: Where<Menu>,
   ): Promise<Count> {
-    return this.rolRepository.menus(id).patch(manu, where);
+    return this.rolRepository.menus(id).patch(menu, where);
   }
 
-  @del('/rols/{id}/manus', {
+  @del('/rols/{id}/menus', {
     responses: {
       '200': {
-        description: 'Rol.Manu DELETE success count',
+        description: 'Rol.Menu DELETE success count',
         content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   async delete(
     @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Manu)) where?: Where<Manu>,
+    @param.query.object('where', getWhereSchemaFor(Menu)) where?: Where<Menu>,
   ): Promise<Count> {
     return this.rolRepository.menus(id).delete(where);
   }

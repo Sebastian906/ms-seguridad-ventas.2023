@@ -3,7 +3,7 @@ import {Rol} from './rol.model';
 import {RolMenu} from './rol-menu.model';
 
 @model()
-export class Manu extends Entity {
+export class Menu extends Entity {
   @property({
     type: 'string',
     id: true,
@@ -22,16 +22,16 @@ export class Manu extends Entity {
   })
   descripcion?: string;
 
-  @hasMany(() => Rol, {through: {model: () => RolMenu, keyFrom: 'menuId'}})
+  @hasMany(() => Rol, {through: {model: () => RolMenu}})
   roles: Rol[];
 
-  constructor(data?: Partial<Manu>) {
+  constructor(data?: Partial<Menu>) {
     super(data);
   }
 }
 
-export interface ManuRelations {
+export interface MenuRelations {
   // describe navigational properties here
 }
 
-export type ManuWithRelations = Manu & ManuRelations;
+export type MenuWithRelations = Menu & MenuRelations;
